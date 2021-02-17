@@ -2,21 +2,34 @@
 include "../db.php";
 include "../library.php";
 session_start();
+$uziv = htmlspecialchars(strip_tags($_POST["uzivatel"]));
+$heslo = htmlspecialchars(strip_tags($_POST["heslo"]));
+$email = htmlspecialchars(strip_tags($_POST["email"]));
 $_SESSION["chyba"] = "";
-if (empty($_POST["email"])) {
+
+if (empty($email)) {
 	$_SESSION["chyba"] .= "zadej email<br>";
 }
-if (empty($_POST["uzivatel"])) {
+if (empty($uziv)) {
 	$_SESSION["chyba"] .= "zadej uzivatelske jmeno<br>";
 }
-if (empty($_POST["heslo"])) {
+if (empty($heslo)) {
 	$_SESSION["chyba"] .= "zadej heslo<br>";
 }
+if ($heslo != $_POST["heslo_znovu"]) {
+	$_SESSION["chyba"] .= "hesla nejsou stejna<br>";
+}
+if (strlen($heslo) < 8) {
+	$_SESSION["chyba"] .= "heslo musi byt delsi nez 8 znaku<br>";
+}
+if ((preg_match("/[A-Z]/", $heslo) == 0 or (preg_match("/[0-9]/", $heslo)) == 0)) {
+	$_SESSION["chyba"] .= "heslo musi obsahovat velke pismeno a cislici<br>";
+}
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+	$_SESSION["chyba"] .= "spatny format emailu<br>";
+}
 if ($_SESSION["chyba"] == "") {
-	$uziv = htmlspecialchars(strip_tags($_POST["uzivatel"]));
-	$heslo = htmlspecialchars(strip_tags($_POST["heslo"]));
 	$hash = hash("sha512", $heslo);
-	$email = htmlspecialchars(strip_tags($_POST["email"]));
 	$sql = "INSERT INTO uzivatele (`uzivatelske_jmeno`, `email`, `heslo`) VALUES ('$uziv', '$email', '$hash')";
 	$query = mysqli_query($con,$sql);
 	$id_uziv = select_uzivatel_id($uziv);

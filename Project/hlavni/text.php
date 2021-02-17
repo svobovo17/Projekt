@@ -3,16 +3,24 @@
 	include "../library.php";
 	include "../db.php";
 	include "../library_prihlasen.php";
+//	include "auto_refresh.php";
 		neprihlasen($_SESSION['prihlaseni']);
 	$_SESSION["vybrany_uzivatel"] = "";
 	if (!empty($_POST)) {
 		$_SESSION["post"] = $_POST;
 	}
+	//header("refresh:5");
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Chat</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		setInterval(function(){
+			$( "#zpravy" ).load(window.location.href + " #zpravy" );
+		}, 2000);
+	</script>
 </head>
 <body>
 	<div id="header">
@@ -29,8 +37,8 @@
 				<form method="post" action="zapis.php">
 					<input type="hidden" name="uzivatel" value="<?php echo $_SESSION['post']['uzivatel']?>">
 					<input type="hidden" name="klic" value="<?php echo $_SESSION['post']['klic']?>">
-					<input type="text" name="zprava" placeholder="Klikni zde a napis zpravu">
-					<input type="submit" placeholder="Odeslat">
+					<input id="zprava" type="text" name="zprava" placeholder="Klikni zde a napis zpravu">
+					<input type="submit" name="submit" placeholder="Odeslat">
 				</form>
 	</div>
 </body>

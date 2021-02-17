@@ -7,12 +7,16 @@
 <html>
 <head>
 	<title>desifrace</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<form action="text.php" method="POST">
-		<input type="hidden" name="uzivatel" value="<?php echo $_POST['uzivatel']?>">
-		<input type="text" name="klic">
-		<input type="submit">
-	</form>
+	<div id="desifrace">
+		<p id="desifrace_text">Zde zadej klíč pro dešifrování komunikace</p>
+		<form action="text.php" method="POST" id="desifrace_form">
+			<input type="hidden" name="uzivatel" value="<?php echo $_POST['uzivatel']?>">
+			<input type="text" name="klic">
+			<input type="submit">
+		</form>
+	</div>
 </body>
 </html>

@@ -12,8 +12,8 @@ include "../library_prihlasen.php";
 	<link rel="stylesheet" type="text/css" href="style.css">
 <body>
 	<div id="header">
-		<a href="../odhlaseni.php">Odhlasit se</a>
-		<p>Přihlášený uživatel <?php echo $_SESSION['uzivatel']?></p>
+		<span id="uzivatel_prihlasen">Přihlášený uživatel: <?php echo $_SESSION['uzivatel']?></span>
+		<a href="../odhlaseni.php" id="odhlaseni">Odhlasit se</a>
 	</div>
 	<div id="chat">
 		<div id="uzivatele">
@@ -27,13 +27,12 @@ include "../library_prihlasen.php";
 				}
 			?>
 		</div>
-		<!--rozpracováno
+		<!--
 		<div id="historie">
 			<?php
 				//echo chat_historie($_SESSION['uzivatel']);
 			?>
-		</div>
-		-->
+		</div>-->
 	</div>
 </body>
 </html>

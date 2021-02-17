@@ -70,29 +70,23 @@
 		}
 		return $vysledek;
 	}
-	//rozpracováno
 	function select_chat_historie($uzivatel){
 		global $con;
 		$id_uzivatele = select_uzivatel_id($uzivatel);
-		$sql = "SELECT distinct prijemce_id, odesilatel_id FROM `chat` Inner join `uzivatele` on chat.odesilatel_id = uzivatele.id WHERE odesilatel_id = '$id_uzivatele'";// Group by odesilatel_id Having count(*) >= 1
+		$sql = "SELECT distinct * FROM `uzivatele` INNER JOIN `chat` on uzivatele.ID = chat.odesilatel_id WHERE EXISTS (SELECT * FROM `chat` WHERE uzivatele.ID = chat.odesilatel_id OR uzivatele.ID = chat.prijemce_id) AND uzivatele.ID != '$id_uzivatele' AND chat.prijemce_id = '$id_uzivatele' OR chat.odesilatel_id = '$id_uzivatele'";
 		$query = mysqli_query($con, $sql);
 		$row = mysqli_fetch_all($query);
-
-		$sql = "SELECT distinct odesilatel_id,prijemce_id FROM `chat` Inner join `uzivatele` on chat.prijemce_id = uzivatele.id WHERE prijemce_id = '$id_uzivatele'";// Group by prijemce_id Having count(*) >= 1
-		$query = mysqli_query($con, $sql);
-		$row2 = mysqli_fetch_all($query);
-		return array_merge($row, $row2);
+		return $row;
 	}
-	//rozpracováno
 	function chat_historie($uzivatel){
 		$vysledek = '';
 		$row = select_chat_historie($uzivatel);
 		$id_uzivatele = select_uzivatel_id($uzivatel);
 		foreach ($row as $key => $value) {
-			if ($value[0] == $id_uzivatele) {
-				$jmeno = select_uzivatel_jmeno($value[1]);
-			}else{
-				$jmeno = select_uzivatel_jmeno($value[0]);
+			if ($value[6] == $id_uzivatele) {
+				$jmeno = select_uzivatel_jmeno($value[7]);
+			}elseif ($value[7] == $id_uzivatele) {
+				$jmeno = select_uzivatel_jmeno($value[6]);
 			}
 			$vysledek .= "chat s uživatelem: ".$jmeno."<br>";
 			$vysledek .= "<form action='desifrovani.php' method='POST'><input type='submit' name='uzivatel' value='".$jmeno."'><br>";
