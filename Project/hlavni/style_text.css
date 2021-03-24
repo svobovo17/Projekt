@@ -1,0 +1,20 @@
+html{
+	width: -webkit-fill-available;
+	height: -webkit-fill-available;
+	font-family: sans-serif;
+}
+body {
+	margin: 0px;
+}
+#header {
+	margin-bottom: 20px;
+}
+#header a {
+	text-decoration: none;
+}
+.autor_zpravy{
+	font-size: 14px;
+}
+.zprava_v_chatu{
+	margin-bottom: 10px;
+}

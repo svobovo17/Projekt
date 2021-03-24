@@ -15,7 +15,12 @@
 		<form action="text.php" method="POST" id="desifrace_form">
 			<input type="hidden" name="uzivatel" value="<?php echo $_POST['uzivatel']?>">
 			<input type="text" name="klic">
-			<input type="submit">
+			<input type="submit" value="Přejít na komunikaci">
+		</form>
+		<form action="zadost.php" method="POST" id="zadost_form">
+			<input type="hidden" name="uzivatel" value="<?php echo $_POST['uzivatel']?>">
+			<input type="hidden" name="zadost" value="true">
+			<input type="submit" value="Požádat o klíč">
 		</form>
 	</div>
 </body>

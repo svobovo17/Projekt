@@ -4,7 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>kod</title>
+	<title>kód</title>
 </head>
 <body>
 	<p>Toto je tvůj unikátní kód, který musíte zadat při přihlášení : <?php echo $_SESSION['kod']?></p>
